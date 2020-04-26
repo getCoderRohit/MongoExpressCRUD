@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Rohit Hegde">
+
+        <title>HEROES</title>
+
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+            td, th {
+                border: 1px solid #dddddd;
+                padding: 8px;
+            }
+            input,button {
+                padding: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            function myFunc(){
+                console.log('PRESSED')
+            }
+        </script>
+
+        <h1>HEROES</h1>
+
+        <div style="width: 51%;">
+            <form 
+                style="flex: 1;justify-content: space-evenly;" 
+                action="/listHeroes" 
+                method="POST"
+            >
+                <input value="<%= heroData.length == 0 ? update.name : '' %>" type="text" placeholder="Name" name="name">
+                <input value="<%= heroData.length == 0 ? update.alias : '' %>" type="text" placeholder="Alias" name="alias">
+                <input type="hidden" name="isUpdate" value="<%= heroData.length == 0 ? update.name : false %>" >
+                <button type="submit"><%= heroData.length != 0 ? 'ADD' : 'UPDATE' %></button>
+            </form>
+    
+            <table style="margin-top: 10px">
+                <tr style="background-color: #bebebe">
+                    <th>NAME</th>
+                    <th>ALIAS</th>
+                    <th>ACTION</th>
+                </tr>
+                <% for(var i = 0; i < heroData.length; i++) {%>
+                    <tr>
+                        <td><%= heroData[i].name %></td>
+                        <td><%= heroData[i].alias %></td>
+                        <td>
+                            <div style="flex-direction: row;">
+                            <form action="/listHeroes/<%= heroData[i].name %>" method="POST">
+                                <button type="submit">D</button>
+                            </form>
+                            <form action="/listHeroes/<%= heroData[i].name %>" method="GET">
+                                <button type="submit">U</button>
+                            </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </body>
+</html>
