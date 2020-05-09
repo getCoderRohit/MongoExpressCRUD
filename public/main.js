@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function deleteRecord(i,name){
     console.log('func data',i,name)
     
@@ -13,20 +12,4 @@ function deleteRecord(i,name){
 
 $(document).on('click','btn-delete',(req)=>{
     console.log('btn pressed',req)
-=======
-function deleteRecord(i,name){
-    console.log('func data',i,name)
-    
-    fetch('http://127.0.0.1:5002/listHeroes',{
-        method: 'delete',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify({ index: i })
-    })
-    .then(res => console.log('onclick delete',res))
-    .catch(err => console.log('onclick delete err',err))
-}
-
-$(document).on('click','btn-delete',(req)=>{
-    console.log('btn pressed',req)
->>>>>>> 7f20b11aa146142a5a051164fff81ee1c43685ab
 })

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
     "All Might" : {
         "name" : "All Might",
@@ -16,22 +15,3 @@
         "profession": "Student"
     }
 }
-=======
-{
-    "All Might" : {
-        "name" : "All Might",
-        "quirk": "One for All",
-        "profession": "Retired Hero" 
-    },
-    "Deku":{
-        "name" : "Izuku Midoriya",
-        "Quirk": "One for All",
-        "profession": "Student"
-    },
-    "LeMillion" : {
-        "name" : "Mirio Togata",
-        "Quirk": "Permeation",
-        "profession": "Student"
-    }
-}
->>>>>>> 7f20b11aa146142a5a051164fff81ee1c43685ab
