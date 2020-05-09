@@ -1,11 +1,13 @@
 const express = require("express")
 const MongoDB = require("mongodb")
 const bodyParser = require("body-parser")
+const os = require("os")
 
 const app = express()
 const MongoClient = MongoDB.MongoClient
 
-const hostname = '127.0.0.1';
+// const hostname = '127.0.0.1';
+const hostname = '0.0.0.0';
 const port = '5002'
 
 let sendFile = `/listHeroes`
@@ -20,6 +22,10 @@ MongoClient.connect(mongoUrl,{useUnifiedTopology: true})
 .then(client => {
     const db = client.db('GothamDB')
     let myCollection = db.collection('batCollection')
+
+    app.get('/',(req,res) => {
+        res.redirect(sendFile)
+    })
     
     //READ DATA
     app.get(sendFile,(req,res) => {
@@ -31,10 +37,12 @@ MongoClient.connect(mongoUrl,{useUnifiedTopology: true})
 
     //ADD DATA
     app.post(sendFile,(req,res) => {
-        console.log('req post',req.body)
-        if(req.body.isUpdate == false){
-            myCollection.insertOne(req.body)
-            .then(() => res.redirect(sendFile))
+        console.log('req post',req.body,typeof req.body.isUpdate)
+        if(req.body.isUpdate == 'false'){    
+            console.log('in create');
+                    
+            myCollection.insertOne({name: req.body.name, alias: req.body.alias})
+            .then((r) => {console.log('res create',r);;res.redirect(sendFile)})
             .catch(err => console.log('ERROR post',err))
         }
         else{
@@ -45,7 +53,6 @@ MongoClient.connect(mongoUrl,{useUnifiedTopology: true})
             .then(()=>res.redirect(sendFile))
             .catch(err => console.log('ERROR post upd',err))
         }
-        
     })
 
     // DELETE DATA
@@ -69,5 +76,8 @@ MongoClient.connect(mongoUrl,{useUnifiedTopology: true})
 .catch(err => console.log('Error client',err))
 
 app.listen(port,hostname,()=>{
-    console.log("Server Mongo listening at http://%s:%s", hostname, port)
+    let ipObject = os.networkInterfaces()
+    let ipAddrObject = ipObject[Object.keys(ipObject).find(key => ipObject[key].find(item => item.family == 'IPv4'))]
+
+    console.log("Server Mongo listening at http://%s:%s", ipAddrObject.find(item => item.family == 'IPv4').address, port)
 })
